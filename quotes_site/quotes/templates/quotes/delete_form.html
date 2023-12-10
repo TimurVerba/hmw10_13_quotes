@@ -1,0 +1,30 @@
+{% extends 'quotes_site/base.html' %}
+
+{% block title %}
+Delete
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+  {% if author %}
+  <h2>Delete Author</h2>
+  <p>Are you sure you want to delete the author "{{ author.fullname }}"?</p>
+    {% else %}
+      <h2>Delete Quote</h2>
+  <p>Are you sure you want to delete the quote "{{ quote.quote }}"?</p>
+    {% endif %}
+
+   {% if form.errors and form.non_field_errors %}
+    <div class="alert alert-danger" role="alert">
+        {{form.non_field_errors}}
+    </div>
+    {% endif %}
+
+
+    <form method="post" style="margin-top: 30px; width: 200px;">
+        {% csrf_token %}
+    <button type="submit" class="btn btn-primary">Yes, delete</button>
+  </form>
+  <a class="btn btn-secondary" href="{% url 'quotes:home' %}" style="margin-top: 10px">Cancel</a>
+</div>
+{% endblock %}

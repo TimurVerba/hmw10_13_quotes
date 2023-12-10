@@ -1,0 +1,32 @@
+{% extends 'quotes_site/base.html' %}
+
+{% block title %}
+{{ author.fullname }}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="justify-content-left" style="margin-top: 50px;width: 80rem;">
+    {% for message in messages %}
+        <h3 class="justify-content-center" style="margin-left: 50px; margin-bottom: 25px"> {{ message }}</h3>
+    {% endfor %}
+    {% if author.user == request.user %}
+    <a class="btn btn-secondary" href="{% url 'quotes:delete_author' author.fullname %}" style="float: right; margin-left: 10px">Delete</a>
+    <a class="btn btn-primary" href="{% url 'quotes:edit_author' author.fullname %}" style="float: right;">Edit</a>
+    {% endif %}
+</div>
+<div class="justify-content-center" style="margin-top: 50px;">
+
+    <div class="mx-auto" style="width: 70rem;">
+        <h1>{{ author.fullname }}</h1>
+
+        <div class="alert alert-info d-inline-block" role="alert">
+            {{ author.born_date }} {{ author.born_location }}
+        </div>
+        <p style="text-align: justify;">{{ author.description }}</p>
+    </div>
+
+
+</div>
+{% endblock %}

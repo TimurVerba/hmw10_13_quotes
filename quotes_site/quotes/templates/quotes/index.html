@@ -1,0 +1,64 @@
+{% extends 'quotes_site/base.html' %}
+
+{% block title %}
+Quotes
+{% endblock %}
+
+{% block content %}
+
+
+<div class="justify-content-center" style="margin-top: 50px">
+    {% for message in messages %}
+        <h3 class="justify-content-center" style="margin-left: 50px; margin-bottom: 25px"> {{ message }}</h3>
+    {% endfor %}
+
+    {% for quote in quotes %}
+    <div class="card border border-dark shadow-sm mx-auto" style="width: 60rem; margin-bottom: 25px">
+        <div class="card-body">
+            <p class="card-text">{{ quote.quote }}</p>
+
+            <h5 class="card-title">
+                <a class="card-title" href="{% url 'quotes:author' quote.author.fullname %}">{{ quote.author.fullname }}</a>
+            </h5>
+
+            {% for tag in quote.tags %}
+            {% if tag %}
+            <a class="card-link" href="{% url 'quotes:tag' tag %}">{{ tag }}</a>
+            {% endif %}
+            {% endfor %}
+
+            {% if quote.user == request.user %}
+            <a class="btn btn-secondary" href="{% url 'quotes:delete_quote' quote.id %}" style="float: right; margin-left: 10px">Delete</a>
+            <a class="btn btn-primary" href="{% url 'quotes:edit_quote' quote.id %}" style="float: right;">Edit</a>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <nav aria-label="...">
+        <ul class="pagination justify-content-center">
+            {% if quotes.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ quotes.previous_page_number }}">Previous</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?page={{ quotes.previous_page_number }}">
+                {{ quotes.previous_page_number }}</a></li>
+            {% endif %}
+
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">{{ quotes.number }}</span>
+            </li>
+
+            {% if quotes.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ quotes.next_page_number }}">
+                {{ quotes.next_page_number }}</a></li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ quotes.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+</div>
+{% endblock %}

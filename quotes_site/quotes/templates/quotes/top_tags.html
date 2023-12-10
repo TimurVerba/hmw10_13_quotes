@@ -1,0 +1,22 @@
+{% extends 'quotes_site/base.html' %}
+
+{% block title %}
+Top 10 Tags
+{% endblock %}
+
+{% block content %}
+
+
+<div class="d-flex justify-content-center" style="margin-top: 50px;">
+    <div class="mx-auto" style="width: 70rem;">
+        <h1>Top 10 Tags</h1>
+
+        <ul class="list-group" style="margin-top: 25px; margin-bottom: 50px; list-style-type: none; width: 150px">
+            {% for tag, _ in top_tags %}
+                <li style="margin-top: 10px; "><a class="list-group-item" style="background: #5b90f3; color: white"
+                                                  href="{% url 'quotes:tag' tag %}">{{ tag }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
